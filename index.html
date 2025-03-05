@@ -38,7 +38,8 @@
         var data = await response.text();
 		
 	data = data.replace(/"/g, ''); // This removes all double quotes from the data
-		
+
+	console.log(data);
         processData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -84,8 +85,14 @@
 
       const layout = {
         title: 'Stock Price vs P/E Ratio',
-        xaxis: { title: 'P/E Ratio' },
-        yaxis: { title: 'Price (USD)' }
+        xaxis: { 
+          title: 'P/E Ratio',
+          type: 'log', // Logarithmic scale for x-axis
+        },
+        yaxis: { 
+          title: 'Price (USD)',
+          type: 'log', // Logarithmic scale for y-axis
+        }
       };
 
       Plotly.newPlot('plotly-chart', [trace], layout);

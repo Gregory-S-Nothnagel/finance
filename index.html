@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stock Price vs P/E Ratio</title>
   <!-- Include Plotly.js -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
   <!-- Optional: Include a loading spinner -->
   <style>
     #loading {
@@ -31,7 +31,6 @@
     // Function to fetch data from Google Sheets
     async function fetchData() {
       const sheetId = '1_-Q7pODEkdZXQnIGtZjps_0uPI1E5txwm8ukHC78_Ms'; // Replace with your Google Sheets ID
-      const range = 'Sheet1!A:B'; // Adjust the range as needed
       const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
 
       try {
@@ -46,18 +45,9 @@
     // Function to process the fetched CSV data
     function processData(csvData) {
       const rows = csvData.split('\n').slice(1); // Skip header row
-      const symbols = [];
-      const peRatios = [];
-      const prices = [];
-
-      rows.forEach(row => {
-        const cols = row.split(',');
-        if (cols.length >= 3) {
-          symbols.push(cols[0].trim());
-          peRatios.push(parseFloat(cols[1].trim()));
-          prices.push(parseFloat(cols[2].trim()));
-        }
-      });
+      const symbols = ["A","B"];
+      const peRatios = [0, 1];
+      const prices = [1, 0];
 
       createPlot(peRatios, prices, symbols);
     }

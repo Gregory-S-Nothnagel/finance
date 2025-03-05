@@ -44,7 +44,7 @@
 
     // Function to process the fetched CSV data
     function processData(csvData) {
-      const rows = csvData.split('\n').slice(1); // Skip header row
+      const rows = csvData.split('\n').slice(1,5); // Skip header row
       const symbols = [];
       const peRatios = [];
       const prices = [];
@@ -65,6 +65,8 @@
         }
       });
 
+      console.log(symbols);
+      
       createPlot(peRatios, prices, symbols);
     }
 

@@ -60,7 +60,7 @@
     // Function to fetch data from Google Sheets
     async function fetchData() {
       const sheetId = '1_-Q7pODEkdZXQnIGtZjps_0uPI1E5txwm8ukHC78_Ms'; // Replace with your Google Sheets ID
-      const url = 'https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1';
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
 
       try {
         const response = await fetch(url);
@@ -121,7 +121,7 @@
       };
 
       const layout = {
-        title: '${xLabel} vs ${yLabel}',
+        title: `${xLabel} vs ${yLabel}`,
         xaxis: { 
           title: xLabel, // Dynamically set the x-axis label
           //type: 'log', // Logarithmic scale for x-axis

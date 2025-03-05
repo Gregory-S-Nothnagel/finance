@@ -67,23 +67,27 @@
         var data = await response.text();
 		
         data = data.replace(/"/g, ''); // This removes all double quotes from the data
-
+        
         console.log(data);
 		// Get selected indexes from dropdowns
         const xIndex = parseInt(document.getElementById('x-index').value);
         const yIndex = parseInt(document.getElementById('y-index').value);
+        
+        // Get selected labels for x and y axes
+        const xLabel = document.getElementById('x-index').selectedOptions[0].text;
+        const yLabel = document.getElementById('y-index').selectedOptions[0].text;
 		
-        processData(data, xIndex, yIndex);
+        processData(data, xIndex, yIndex, xLabel, yLabel);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
     // Function to process the fetched CSV data
-    function processData(csvData, xIndex, yIndex) {
+    function processData(csvData, xIndex, yIndex, xLabel, yLabel) {
       const rows = csvData.split('\n').slice(1); // Skip header row
       var symbols = [];
-	  var xVars = [];
+      var xVars = [];
       var yVars = [];
 
       rows.forEach(row => {
@@ -91,22 +95,22 @@
 
         // Remove extra spaces, and check for invalid data
         const symbol = cols[0]?.trim();
-		const xVar = parseFloat(cols[xIndex]?.trim());
+        const xVar = parseFloat(cols[xIndex]?.trim());
         const yVar = parseFloat(cols[yIndex]?.trim());
 
         // Check if P/E Ratio and Price are valid numbers and not '#N/A'
         if (symbol && !isNaN(xVar) && !isNaN(yVar)) {
           symbols.push(symbol);
-		  xVars.push(xVar);
+          xVars.push(xVar);
           yVars.push(yVar);
         }
       });
       
-      createPlot(xVars, yVars, symbols);
+      createPlot(xVars, yVars, symbols, xLabel, yLabel);
     }
 
     // Function to create the Plotly chart
-    function createPlot(x_data, y_data, symbols) {
+    function createPlot(x_data, y_data, symbols, xLabel, yLabel) {
       const trace = {
         x: x_data,
         y: y_data,
@@ -119,11 +123,11 @@
       const layout = {
         title: 'Stock Price vs P/E Ratio',
         xaxis: { 
-          title: 'P/E Ratio',
+          title: xLabel, // Dynamically set the x-axis label
           type: 'log', // Logarithmic scale for x-axis
         },
         yaxis: { 
-          title: 'Price (USD)',
+          title: yLabel, // Dynamically set the y-axis label
           type: 'log', // Logarithmic scale for y-axis
         }
       };

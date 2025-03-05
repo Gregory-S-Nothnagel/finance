@@ -50,33 +50,34 @@
     function processData(csvData) {
       const rows = csvData.split('\n').slice(1); // Skip header row
       var symbols = [];
+	  var prices = [];
       var peRatios = [];
-      var prices = [];
 
       rows.forEach(row => {
         const cols = row.split(',');
 
         // Remove extra spaces, and check for invalid data
         const symbol = cols[0]?.trim();
-        const peRatio = parseFloat(cols[1]?.trim());
-        const price = parseFloat(cols[2]?.trim());
+		const price = parseFloat(cols[1]?.trim());
+        const peRatio = parseFloat(cols[2]?.trim());
+		const eps = parseFloat(cols[3]?.trim());
 
         // Check if P/E Ratio and Price are valid numbers and not '#N/A'
-        if (symbol && !isNaN(peRatio) && !isNaN(price)) {
+        if (symbol && !isNaN(price) && !isNaN(peRatio)) {
           symbols.push(symbol);
+		  prices.push(price);
           peRatios.push(peRatio);
-          prices.push(price);
         }
       });
       
-      createPlot(peRatios, prices, symbols);
+      createPlot(prices, peRatios, symbols);
     }
 
     // Function to create the Plotly chart
-    function createPlot(peRatios, prices, symbols) {
+    function createPlot(x_data, y_data, symbols) {
       const trace = {
-        x: peRatios,
-        y: prices,
+        x: x_data,
+        y: y_data,
         mode: 'markers',
         type: 'scatter',
         text: symbols,

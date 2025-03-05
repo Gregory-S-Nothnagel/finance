@@ -37,40 +37,39 @@
         const response = await fetch(url);
         var data = await response.text();
 		
-	data = data.replace(/"/g, ''); // This removes all double quotes from the data
+        data = data.replace(/"/g, ''); // This removes all double quotes from the data
 
-	console.log(data);
-        processData(data);
+        console.log(data);
+        processData(data, 1, 2);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
     // Function to process the fetched CSV data
-    function processData(csvData) {
+    function processData(csvData, xIndex, yIndex) {
       const rows = csvData.split('\n').slice(1); // Skip header row
       var symbols = [];
-	  var prices = [];
-      var peRatios = [];
+	  var xVars = [];
+      var yVars = [];
 
       rows.forEach(row => {
         const cols = row.split(',');
 
         // Remove extra spaces, and check for invalid data
         const symbol = cols[0]?.trim();
-		const price = parseFloat(cols[1]?.trim());
-        const peRatio = parseFloat(cols[2]?.trim());
-		const eps = parseFloat(cols[3]?.trim());
+		const xVar = parseFloat(cols[xIndex]?.trim());
+        const yVar = parseFloat(cols[yIndex]?.trim());
 
         // Check if P/E Ratio and Price are valid numbers and not '#N/A'
-        if (symbol && !isNaN(price) && !isNaN(peRatio)) {
+        if (symbol && !isNaN(xVar) && !isNaN(yVar)) {
           symbols.push(symbol);
-		  prices.push(price);
-          peRatios.push(peRatio);
+		  xVars.push(xVar);
+          yVars.push(yVar);
         }
       });
       
-      createPlot(prices, peRatios, symbols);
+      createPlot(xVars, yVars, symbols);
     }
 
     // Function to create the Plotly chart

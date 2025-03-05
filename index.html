@@ -32,20 +32,34 @@
   <div class="dropdown-container">
     <label for="x-index">Select X-axis Index:</label>
     <select id="x-index">
-      <option value="1">Price</option>
-      <option value="2">P/E Ratio</option>
-      <option value="3">EPS</option>
-      <!-- Add more options as needed -->
+      <option value="1">Market Cap</option>
+      <option value="2">Price to Sales TTM</option>
+      <option value="3">PE TTM</option>
+	  <option value="4">Debt to Equity</option>
+	  <option value="5">Return on Assets</option>
+	  <option value="6">Return on Equity</option>
+	  <option value="7">Earnings Growth</option>
+	  <option value="8">Revenue Growth</option>
+	  <option value="9">52 Week High</option>
+	  <option value="10">52 Week Low</option>
+	  <option value="11">Volume</option>
     </select>
   </div>
   
   <div class="dropdown-container">
     <label for="y-index">Select Y-axis Index:</label>
     <select id="y-index">
-      <option value="2">P/E Ratio</option>
-      <option value="1">Price</option>
-      <option value="3">EPS</option>
-      <!-- Add more options as needed -->
+      <option value="1">Market Cap</option>
+      <option value="2">Price to Sales TTM</option>
+      <option value="3">PE TTM</option>
+	  <option value="4">Debt to Equity</option>
+	  <option value="5">Return on Assets</option>
+	  <option value="6">Return on Equity</option>
+	  <option value="7">Earnings Growth</option>
+	  <option value="8">Revenue Growth</option>
+	  <option value="9">52 Week High</option>
+	  <option value="10">52 Week Low</option>
+	  <option value="11">Volume</option>
     </select>
   </div>
   
@@ -95,17 +109,20 @@
       rows.forEach(row => {
         const cols = row.split(',');
 
-        // Remove extra spaces, and check for invalid data
-        const symbol = cols[0]?.trim();
-        const xVar = parseFloat(cols[xIndex]?.trim());
-        const yVar = parseFloat(cols[yIndex]?.trim());
+		if (cols.length >= Math.max(xIndex, yIndex) + 1) {
+			// Remove extra spaces, and check for invalid data
+			const symbol = cols[0]?.trim();
+			const xVarparseFloat(cols[xIndex]?.trim());
+			const yVar = parseFloat(cols[yIndex]?.trim());
 
-        // Check if P/E Ratio and Price are valid numbers and not '#N/A'
-        if (symbol && !isNaN(xVar) && !isNaN(yVar)) {
-          symbols.push(symbol);
-          xVars.push(xVar);
-          yVars.push(yVar);
-        }
+			// Check if P/E Ratio and Price are valid numbers and not '#N/A'
+			if (symbol && !isNaN(xVar) && !isNaN(yVar)) {
+			  symbols.push(symbol);
+			  xVars.push(xVar);
+			  yVars.push(yVar);
+			}
+		}
+		
       });
       
       createPlot(xVars, yVars, symbols, xLabel, yLabel);

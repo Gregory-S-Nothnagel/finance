@@ -36,6 +36,9 @@
       try {
         const response = await fetch(url);
         const data = await response.text();
+		
+		data = data.replace(/"/g, ''); // This removes all double quotes from the data
+		
 		console.log(data);
         processData(data);
       } catch (error) {

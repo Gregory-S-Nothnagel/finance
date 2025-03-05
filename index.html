@@ -112,7 +112,7 @@
 		if (cols.length >= Math.max(xIndex, yIndex) + 1) {
 			// Remove extra spaces, and check for invalid data
 			const symbol = cols[0]?.trim();
-			const xVarparseFloat(cols[xIndex]?.trim());
+			const xVar = parseFloat(cols[xIndex]?.trim());
 			const yVar = parseFloat(cols[yIndex]?.trim());
 
 			// Check if P/E Ratio and Price are valid numbers and not '#N/A'

@@ -45,9 +45,25 @@
     // Function to process the fetched CSV data
     function processData(csvData) {
       const rows = csvData.split('\n').slice(1); // Skip header row
-      const symbols = ["A","B"];
-      const peRatios = [0, 1];
-      const prices = [1, 0];
+      const symbols = [];
+      const peRatios = [];
+      const prices = [];
+
+      rows.forEach(row => {
+        const cols = row.split(',');
+
+        // Remove extra spaces, and check for invalid data
+        const symbol = cols[0]?.trim();
+        const peRatio = parseFloat(cols[1]?.trim());
+        const price = parseFloat(cols[2]?.trim());
+
+        // Check if P/E Ratio and Price are valid numbers and not '#N/A'
+        if (symbol && !isNaN(peRatio) && !isNaN(price)) {
+          symbols.push(symbol);
+          peRatios.push(peRatio);
+          prices.push(price);
+        }
+      });
 
       createPlot(peRatios, prices, symbols);
     }

@@ -35,7 +35,7 @@
 
       try {
         const response = await fetch(url);
-        const data = await response.text();
+        var data = await response.text();
 		
 		data = data.replace(/"/g, ''); // This removes all double quotes from the data
 		
@@ -49,9 +49,9 @@
     // Function to process the fetched CSV data
     function processData(csvData) {
       const rows = csvData.split('\n').slice(1,5); // Skip header row
-      const symbols = [];
-      const peRatios = [];
-      const prices = [];
+      var symbols = [];
+      var peRatios = [];
+      var prices = [];
 
       rows.forEach(row => {
         const cols = row.split(',');

@@ -47,7 +47,7 @@
 
     // Function to process the fetched CSV data
     function processData(csvData) {
-      const rows = csvData.split('\n').slice(1,30); // Skip header row
+      const rows = csvData.split('\n').slice(1); // Skip header row
       var symbols = [];
       var peRatios = [];
       var prices = [];
